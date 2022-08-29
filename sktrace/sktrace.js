@@ -164,7 +164,8 @@ function traceAddr(addr) {
         onEnter: function(args) {
             this.tid = Process.getCurrentThreadId()
 
-            targetModule.size = 0x0008672dc
+            //targetModule.size = 0x0008672dc
+            targetModule.size = 0x17590 
 
             // stalkerTraceRangeC(this.tid, targetModule.base, targetModule.size)
             stalkerTraceRange(this.tid, targetModule.base, targetModule.size)

@@ -19,3 +19,7 @@ python3 sktrace.py -m spawn -l Omi -i 0x00867264  sg.omi.chat
 
 ## android
  python3 sktrace.py -m attach -l libt.so -i getroot  DEMO-420
+
+ python3 sktrace.py -m attach -l libtongdun.so -i 0x001735c  DEMO-420
+
+ //python3 sktrace.py -m spawn -l libtongdun.so -i 0x001735c  cn.tongdun.android.demo420 android 没加载
