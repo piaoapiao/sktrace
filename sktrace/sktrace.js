@@ -163,6 +163,9 @@ function traceAddr(addr) {
     Interceptor.attach(addr, {
         onEnter: function(args) {
             this.tid = Process.getCurrentThreadId()
+
+            targetModule.size = 0x0008672dc
+
             // stalkerTraceRangeC(this.tid, targetModule.base, targetModule.size)
             stalkerTraceRange(this.tid, targetModule.base, targetModule.size)
         },
@@ -223,7 +226,15 @@ function watcherLib(libname, callback) {
         const libname = payload.libname;
         console.log(`libname:${libname}`)
         if(payload.spawn) {
-            console.error(`todo: spawn inject not implemented`)
+            //console.error(`todo: spawn inject not implemented`)
+                        const targetModule = Process.getModuleByName(libname);
+            let targetAddress = null;
+            if("symbol" in payload) {
+                targetAddress = targetModule.findExportByName(payload.symbol);
+            } else if("offset" in payload) {
+                targetAddress = targetModule.base.add(ptr(payload.offset));
+            }
+            traceAddr(targetAddress)
         } else {
             // const modules = Process.enumerateModules();
             const targetModule = Process.getModuleByName(libname);
